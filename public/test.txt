@@ -1,0 +1,59 @@
+
+
+public static function setConnection($){
+    $PrivateAccessToken = $request->header('PrivateAccessToken');
+    $resToken           = DataSettingToken::select('RunNoDataSetting')->where( 'PrivateAccessToken','=', $PrivateAccessToken)->first();
+    $RunNo              = $resToken->RunNoDataSetting;
+    $resultData         = DataSetting::select('DB_IP', 'DB_ID', 'DB_Password', 'DB_Port', 'DatabaseName', 'URLLink', 'StoreCode')->where('RunNo','=', $RunNo)->first();
+    $URLLink            = $resultData->URLLink;
+    $vStoreCode         = $resultData->StoreCode;
+    $vDatabaseName      = $resultData->DatabaseName;
+    if($URLLink=="https://skybizcloud.com/01/" OR $URLLink==""){
+        config(['database.connections.mysql1' => [
+            'driver'    => 'mysql',
+            'host'      => $resultData->DB_IP,
+            'port'      => $resultData->DB_Port,
+            'password'  => $resultData->DB_Password,
+            'database'  => $resultData->DatabaseName,
+            'username'  => $resultData->DB_ID,
+            'charset'   => 'latin1',
+            'collation' => 'latin1_swedish_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ]]);
+    }else{
+        $resultData2    = DataSetting::select('DB_IP', 'DB_ID', 'DB_Password', 'DB_Port', 'DatabaseName')->where('StoreCode','=', $URLLink)->first();
+        config(['database.connections.mysql2' => [
+            'driver'    => 'mysql',
+            'host'      => $resultData2->DB_IP,
+            'port'      => $resultData2->DB_Port,
+            'password'  => $resultData2->DB_Password,
+            'database'  => $resultData2->DatabaseName,
+            'username'  => $resultData2->DB_ID,
+            'charset'   => 'latin1',
+            'collation' => 'latin1_swedish_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ]]);
+        //DB::reconnect('mysql2');
+        DB::purge('mysql2'); 
+        
+        $resAlternate   = DB::connection('mysql2')
+        ->table('datasetting')
+        ->select('DB_IP', 'DB_ID', 'DB_Password', 'DB_Port', 'DatabaseName')
+        ->where(['StoreCode' => $vStoreCode, 'DatabaseName'  => $vDatabaseName])
+        ->first();
+        config(['database.connections.mysql1' => [
+            'driver'    => 'mysql',
+            'host'      => $resAlternate->DB_IP,
+            'port'      => $resAlternate->DB_Port,
+            'password'  => $resAlternate->DB_Password,
+            'database'  => $resAlternate->DatabaseName,
+            'username'  => $resAlternate->DB_ID,
+            'charset'   => 'latin1',
+            'collation' => 'latin1_swedish_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ]]);
+    }
+}
