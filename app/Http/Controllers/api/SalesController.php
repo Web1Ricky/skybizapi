@@ -56,6 +56,17 @@ class SalesController extends Controller
         return ResponseFormatter::success($CusInvDt,"success");
     }
 
+
+    public function SalesOrder(Request $request)
+    {
+        return ResponseFormatter::error(null,"Integration Type Not Already", 403);
+    }
+
+    public function SODetail(Request $request)
+    {
+        return ResponseFormatter::error(null,"Integration Type Not Already", 403);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -81,7 +92,7 @@ class SalesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function SOEr(Request $request, string $id)
     {
         //
     }

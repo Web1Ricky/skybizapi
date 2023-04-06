@@ -24,6 +24,10 @@ Route::middleware('VerifyToken')->group(function () {
         Route::get('/sales', [SalesController::class,'ShowAll']);
         Route::get('/sales/detail', [SalesController::class,'SalesDetail']);
     });
+    Route::middleware('ScopeApi:SO')->group(function () {
+        Route::get('/sales_order', [SalesController::class,'SalesOrder']);
+        Route::get('/sales_order/detail', [SalesController::class,'SODetail']);
+    });
 });
 //Route::get('/tokendenied', [HomeController::class, 'AccessTokenDenied'])->name('tokendenied');
 Route::get('/scopedenied', [HomeController::class, 'ScopeDenied'])->name('scopedenied');
