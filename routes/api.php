@@ -25,7 +25,7 @@ Route::middleware('VerifyToken')->group(function () {
         Route::get('/sales/detail', [SalesController::class,'SalesDetail']);
     });
 });
-Route::get('/tokendenied', [HomeController::class, 'AccessTokenDenied'])->name('tokendenied');
+//Route::get('/tokendenied', [HomeController::class, 'AccessTokenDenied'])->name('tokendenied');
 Route::get('/scopedenied', [HomeController::class, 'ScopeDenied'])->name('scopedenied');
 Route::get('/sales/test', [SalesController::class,'APITest']);
 Route::get('/hapus/cache', function(){Artisan::call('config:clear');});
