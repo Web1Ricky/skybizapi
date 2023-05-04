@@ -56,15 +56,14 @@ class SalesController extends Controller
         return ResponseFormatter::success($CusInvDt,"success");
     }
 
-
     public function SalesOrder(Request $request)
     {
-        return ResponseFormatter::error(null,"Integration Type Not Already", 403);
+        return ResponseFormatter::error(null,"Integration Type Not Yet Already", 403);
     }
 
     public function SODetail(Request $request)
     {
-        return ResponseFormatter::error(null,"Integration Type Not Already", 403);
+        return ResponseFormatter::error(null,"Integration Type Not Yet Already", 403);
     }
 
     /**

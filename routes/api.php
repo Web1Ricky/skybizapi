@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\SalesController;
 use App\Http\Controllers\api\HomeController;
+use App\Http\Controllers\api\InventoryController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,6 +28,9 @@ Route::middleware('VerifyToken')->group(function () {
     Route::middleware('ScopeApi:SO')->group(function () {
         Route::get('/sales_order', [SalesController::class,'SalesOrder']);
         Route::get('/sales_order/detail', [SalesController::class,'SODetail']);
+    });
+    Route::middleware('ScopeApi:Inventory')->group(function () {
+        Route::get('/inventory/onhand', [InventoryController::class,'OnHand']);
     });
 });
 //Route::get('/tokendenied', [HomeController::class, 'AccessTokenDenied'])->name('tokendenied');

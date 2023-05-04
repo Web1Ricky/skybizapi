@@ -20,5 +20,4 @@ class DatabaseConnection{
         return DB::connection('mysqldynamic');
     }
 
-
 }
