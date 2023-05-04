@@ -16,6 +16,7 @@ class InventoryController extends Controller
     public function OnHand(Request $request)
     {
         $SessionID                  = $request->header('PrivateAccessToken');
+        dd($SessionID);
         $LocationCode               = $request->LocationCode;
         $ItemCode                   = $request->ItemCode;
         $params['SessionID']        = $SessionID;

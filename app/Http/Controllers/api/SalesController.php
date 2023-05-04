@@ -85,7 +85,9 @@ class SalesController extends Controller
      */
     public function show(string $id)
     {
-        Artisan::call('config:clear');
+        //Artisan::call('optimize:clear');
+        Artisan::call('route:clear');
+        Artisan::call('route:cache');
     }
 
     /**
